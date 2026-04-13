@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Barber's Hoüse – Barbería y Visagismo en Limpio, Paraguay. Agenda tu cita ahora.">
+<title>Barber's Hoüse | Barbería y Visagismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- FIX 1: Removed corrupt integrity hash so Font Awesome loads correctly -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer">
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  --primary:      #C8A96A;
+  --primary-dark: #9A7A3F;
+  --primary-light:#E8D4A0;
+  --bg:           #F8F6F1;
+  --bg-dark:      #1A1A1A;
+  --text:         #1C1C1C;
+  --text-light:   #F0EBE0;
+  --white:        #FFFFFF;
+  --wa-green:     #25D366;
+  --shadow-soft:  0 2px 16px rgba(0,0,0,0.08);
+  --radius:       12px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;position:relative}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glow-logo{0%,100%{box-shadow:0 0 24px rgba(200,169,106,.6),0 0 48px rgba(200,169,106,.2)}50%{box-shadow:0 0 44px rgba(200,169,106,.95),0 0 88px rgba(200,169,106,.35)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes flicker{0%,100%{opacity:1;transform:scale(1)}30%{opacity:.8;transform:scale(.94)}60%{opacity:1;transform:scale(1.06)}80%{opacity:.9;transform:scale(.97)}}
+@keyframes pulse-wa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}50%{box-shadow:0 0 0 16px rgba(37,211,102,0)}}
+@keyframes topbar-in{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
+@keyframes slide-fade-in{from{opacity:0}to{opacity:1}}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.4rem);font-weight:700;color:var(--text);text-align:center;margin-bottom:8px}
+.section-title::after{content:'';display:block;width:48px;height:3px;background:var(--primary);border-radius:2px;margin:10px auto 0}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;background:rgba(15,10,5,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,169,106,.2);animation:topbar-in .5s ease both}
+.topbar-brand{display:flex;align-items:center;gap:10px}
+/* Logo con fondo blanco, sin recorte, dimensiones correctas */
+.topbar-logo{width:42px;height:42px;border-radius:8px;object-fit:contain;padding:3px;background:#ffffff;border:1.5px solid rgba(200,169,106,.45);flex-shrink:0;box-shadow:0 1px 6px rgba(0,0,0,.25)}
+.topbar-name{font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;color:var(--primary-light);letter-spacing:.06em;line-height:1.2}
+.topbar-tagline{font-size:.62rem;color:rgba(200,169,106,.6);letter-spacing:.1em;text-transform:uppercase;font-style:italic}
+.topbar-cta{display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#111;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:100px;white-space:nowrap;transition:background .18s,transform .18s}
+.topbar-cta:hover{background:var(--primary-light);transform:scale(1.04)}
+.topbar-cta i{font-size:.78rem}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;overflow:hidden;background:radial-gradient(ellipse 80% 55% at 50% 30%,rgba(200,169,106,.16) 0%,transparent 70%),var(--bg-dark)}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--primary),transparent)}
+
+.hero-logo-wrap{position:relative;z-index:2;margin-bottom:30px;animation:float 4s ease-in-out infinite}
+.hero-logo-circle{width:clamp(140px,32vw,210px);height:clamp(140px,32vw,210px);border-radius:50%;background:radial-gradient(circle at 38% 32%,#ffffff 0%,#f2e9d8 55%,#dbc99a 100%);display:flex;align-items:center;justify-content:center;padding:16px;animation:glow-logo 3s ease-in-out infinite}
+.hero-logo{width:100%;height:100%;object-fit:contain;border-radius:50%}
+
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(52px,12vw,110px);font-weight:900;line-height:.92;letter-spacing:-.02em;background:linear-gradient(135deg,#fff 0%,var(--primary-light) 40%,var(--primary) 70%,var(--primary-dark) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite,fadeUp .8s ease both;position:relative;z-index:2;margin-bottom:8px}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,3vw,1.35rem);font-style:italic;color:var(--primary-light);letter-spacing:.12em;text-transform:uppercase;animation:fadeUp .8s .15s ease both;position:relative;z-index:2;margin-bottom:18px}
+.hero-slogan{font-size:clamp(.82rem,2.5vw,1rem);color:rgba(240,235,224,.58);font-style:italic;letter-spacing:.04em;animation:fadeUp .8s .3s ease both;position:relative;z-index:2;margin-bottom:22px;max-width:320px}
+.hero-location{display:inline-flex;align-items:center;gap:7px;background:rgba(200,169,106,.1);border:1px solid rgba(200,169,106,.35);color:var(--primary-light);font-size:.76rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:7px 18px;border-radius:100px;animation:fadeUp .8s .45s ease both;position:relative;z-index:2;margin-bottom:30px}
+.hero-emojis{display:flex;gap:10px;font-size:1.4rem;position:relative;z-index:2;animation:fadeUp .8s .6s ease both}
+.hero-emojis span:nth-child(odd){animation:flicker 2.6s ease-in-out infinite}
+.hero-emojis span:nth-child(even){animation:flicker 2.6s .4s ease-in-out infinite}
+
+/* ============================================================
+   INFO SECTION
+   ============================================================ */
+.info-section{position:relative;overflow:hidden}
+.info-bg{position:absolute;inset:0;background-image:url('https://i.ibb.co/zV4qYCXR/20260413-142547.jpg');background-size:cover;background-position:center;z-index:0}
+.info-overlay{position:absolute;inset:0;background:rgba(12,8,4,.70);z-index:1}
+.info-content{position:relative;z-index:2;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;max-width:600px;margin:0 auto}
+.info-card{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(200,169,106,.3);border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;gap:16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* FIX 2: color added so FA icons and SVGs inherit the gold color */
+.info-icon{width:52px;height:52px;background:rgba(200,169,106,.12);border:1px solid rgba(200,169,106,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--primary);font-size:1.5rem;line-height:1}
+.info-text-block h3{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:4px}
+.info-text-block p{font-size:.93rem;color:rgba(240,235,224,.9);line-height:1.5}
+
+/* ============================================================
+   GALLERY — SLIDESHOW (foto por foto)
+   ============================================================ */
+.gallery-section{padding:52px 0 48px;background:var(--bg)}
+.gallery-header{padding:0 24px 28px}
+
+/* FIX 4: Slideshow styles */
+.gallery-slideshow{position:relative;width:calc(100% - 48px);max-width:420px;margin:0 auto;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15)}
+.slides-wrapper{position:relative;width:100%;height:100%}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .55s ease;pointer-events:none}
+.slide.active{opacity:1;pointer-events:auto;animation:slide-fade-in .55s ease both}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Nav arrows */
+.slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(10,7,3,.52);border:1px solid rgba(200,169,106,.35);color:var(--primary-light);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,transform .2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.slide-arrow:hover{background:rgba(200,169,106,.35);transform:translateY(-50%) scale(1.08)}
+.slide-arrow svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.slide-prev{left:12px}
+.slide-next{right:12px}
+
+/* Dot indicators */
+.slide-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:10}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);border:none;cursor:pointer;padding:0;transition:background .25s,transform .25s}
+.dot.active{background:var(--primary);transform:scale(1.25)}
+
+/* Counter badge */
+.slide-counter{position:absolute;top:12px;right:12px;z-index:10;background:rgba(10,7,3,.55);color:var(--primary-light);font-size:.68rem;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:100px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+/* ============================================================
+   CTA AGENDAR (below gallery)
+   ============================================================ */
+.cta-agendar{padding:40px 24px 52px;display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--bg);text-align:center}
+.cta-agendar-label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(107,97,86,.7);margin-bottom:2px}
+.btn-agendar{display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;color:#111;background:linear-gradient(135deg,#E8D4A0 0%,var(--primary) 45%,var(--primary-dark) 100%);background-size:200% auto;animation:shimmer 3.5s linear infinite;padding:18px 44px;border-radius:100px;box-shadow:0 8px 30px rgba(200,169,106,.55),0 2px 8px rgba(0,0,0,.15);width:100%;max-width:360px;transition:transform .18s,box-shadow .18s}
+.btn-agendar:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(200,169,106,.7),0 4px 12px rgba(0,0,0,.2)}
+.btn-agendar:active{transform:scale(.97)}
+.btn-agendar i{font-size:1.1rem}
+
+/* ============================================================
+   ORNAMENT
+   ============================================================ */
+.ornament{text-align:center;padding:14px 0;color:var(--primary);font-size:1rem;letter-spacing:.5rem;opacity:.5;background:var(--bg);user-select:none}
+
+/* ============================================================
+   MAP SECTION
+   ============================================================ */
+.map-section{position:relative;overflow:hidden;height:clamp(220px,45vw,380px)}
+.map-iframe{width:100%;height:100%;border:0;display:block;filter:grayscale(15%) contrast(1.05)}
+.map-overlay-btn{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10}
+.btn-map{display:inline-flex;align-items:center;gap:9px;background:rgba(20,15,8,.88);color:var(--white);border:1.5px solid var(--primary);font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:13px 28px;border-radius:100px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap;transition:background .2s,transform .18s,border-color .2s;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.btn-map:hover{background:var(--primary);border-color:var(--primary);color:#111;transform:translateX(-50%) translateY(-2px)}
+.btn-map i{font-size:.9rem;color:var(--primary);transition:color .2s}
+.btn-map:hover i{color:#111}
+
+/* ============================================================
+   SOCIAL
+   ============================================================ */
+.social-section{padding:52px 24px;background:var(--bg-dark);text-align:center}
+.social-section .section-title{color:var(--white)}
+.social-section .section-title::after{background:var(--primary)}
+.social-subtitle{color:rgba(240,235,224,.45);font-size:.8rem;margin:12px 0 32px;letter-spacing:.05em}
+.social-links{display:flex;flex-direction:column;align-items:center;gap:14px}
+.social-link{display:flex;align-items:center;gap:14px;border-radius:var(--radius);padding:14px 24px;color:var(--white);font-size:.88rem;font-weight:600;width:100%;max-width:320px;transition:transform .2s,box-shadow .2s;letter-spacing:.02em}
+.social-link:hover{transform:translateY(-2px)}
+.social-link-ig{background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);box-shadow:0 4px 20px rgba(220,39,67,.35)}
+.social-link-ig:hover{box-shadow:0 8px 28px rgba(220,39,67,.5)}
+.social-link-fb{background:#1877F2;box-shadow:0 4px 20px rgba(24,119,242,.35)}
+.social-link-fb:hover{box-shadow:0 8px 28px rgba(24,119,242,.5)}
+/* FIX 1: FA brand icons now load; this rule ensures correct sizing */
+.social-link i{font-size:1.6rem;width:32px;text-align:center;flex-shrink:0}
+.social-link-handle{display:flex;flex-direction:column;text-align:left}
+.social-link-handle span:first-child{font-size:.65rem;opacity:.75;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.social-link-handle span:last-child{font-size:.92rem;font-weight:700}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:#111;padding:40px 24px 90px;text-align:center;border-top:1px solid rgba(200,169,106,.15)}
+.footer-address{color:rgba(240,235,224,.5);font-size:.78rem;line-height:1.9;margin-bottom:16px;letter-spacing:.03em}
+.footer-address i{color:var(--primary);margin-right:5px}
+.footer-copy{color:rgba(240,235,224,.28);font-size:.72rem;letter-spacing:.04em;line-height:1.7}
+.footer-copy i{color:var(--primary);margin-right:4px}
+.footer-designer{color:rgba(200,169,106,.45);font-size:.68rem;margin-top:8px;letter-spacing:.07em}
+
+/* ============================================================
+   FLOATING WA
+   ============================================================ */
+.wa-float{position:fixed;bottom:24px;right:20px;z-index:9999;width:60px;height:60px;background:var(--wa-green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.75rem;box-shadow:0 4px 20px rgba(37,211,102,.45);animation:pulse-wa 2.4s ease-in-out infinite;transition:transform .18s}
+.wa-float:hover{transform:scale(1.1)}
+
+/* ============================================================
+   DESKTOP 820px+
+   ============================================================ */
+@media(min-width:820px){
+  .topbar{height:58px;padding:0 40px}
+  .topbar-name{font-size:1rem}
+  .hero{padding:110px 60px 80px}
+  .info-content{flex-direction:row;align-items:stretch;gap:28px;max-width:860px;padding:80px 48px}
+  .info-card{flex:1}
+  .gallery-section{padding:64px 0 52px}
+  .gallery-header{padding:0 48px 32px}
+  .gallery-slideshow{max-width:520px}
+  .cta-agendar{padding:44px 48px 60px}
+  .btn-agendar{max-width:380px;font-size:1rem;padding:20px 52px}
+  .social-section{padding:64px 48px}
+  .social-links{flex-direction:row;justify-content:center}
+  .social-link{max-width:260px;flex:1}
+  footer{padding:48px 60px 90px}
+}
+
+/* ============================================================
+   WIDE 1200px+
+   ============================================================ */
+@media(min-width:1200px){
+  .topbar{padding:0 80px}
+  .hero{padding:110px 120px 80px}
+  .info-content{max-width:1000px}
+  .gallery-slideshow{max-width:580px}
+  .gallery-header{padding:0 80px 36px}
+  .cta-agendar{padding:44px 120px 64px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar" role="banner">
+  <div class="topbar-brand">
+    <!-- FIX 3: logo con fallback de fondo dorado para que siempre sea visible -->
+    <img
+      class="topbar-logo"
+      src="https://i.ibb.co/twPKt16J/20260413-020133.png"
+      alt="Logo Barber's Hoüse"
+      loading="eager"
+      width="36"
+      height="36"
+    >
+    <div>
+      <div class="topbar-name">BARBER'S HOÜSE</div>
+      <div class="topbar-tagline">Barbería &amp; Visagismo · Limpio</div>
+    </div>
+  </div>
+  <a class="topbar-cta" href="https://wa.me/595983521982?text=Hola!%20Quisiera%20agendar%20un%20turno%20en%20Barber%27s%20House." target="_blank" rel="noopener noreferrer">
+    <!-- FIX 1: WhatsApp icon now loads because integrity hash is fixed -->
+    <i class="fa-brands fa-whatsapp"></i>
+    Agendar
+  </a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo-wrap">
+    <div class="hero-logo-circle">
+      <img class="hero-logo" src="https://i.ibb.co/twPKt16J/20260413-020133.png" alt="Logo Barber's Hoüse" loading="eager">
+    </div>
+  </div>
+  <h1 class="hero-name">BARBER'S<br>HOÜSE</h1>
+  <p class="hero-sub">Barbería &amp; Visagismo</p>
+  <p class="hero-slogan">"Cambiamos tu percepción con un corte..."</p>
+  <span class="hero-location">
+    <i class="fa-solid fa-location-dot"></i>
+    Limpio, Paraguay
+  </span>
+  <div class="hero-emojis" aria-hidden="true">
+    <span>✂️</span>
+    <span>🔥</span>
+    <span>💈</span>
+    <span>🔥</span>
+    <span>✂️</span>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section">
+  <div class="info-bg" role="img" aria-label="Interior de la barbería"></div>
+  <div class="info-overlay"></div>
+  <div class="info-content">
+
+    <!-- FIX 2: ⏰ reemplazado por SVG minimalista de reloj -->
+    <div class="info-card">
+      <div class="info-icon" aria-hidden="true">⏰</div>
+      <div class="info-text-block">
+        <h3>Horario de Atención</h3>
+        <p>Lunes a Sábado<br>10:00 a 20:00 hs.</p>
+      </div>
+    </div>
+
+    <!-- FIX 2: 🤝 reemplazado por SVG minimalista de apretón de manos -->
+    <div class="info-card">
+      <div class="info-icon" aria-hidden="true">🤝🏻</div>
+      <div class="info-text-block">
+        <h3>Métodos de Pago</h3>
+        <p>Transferencia Bancaria<br>y Efectivo</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY — SLIDESHOW foto por foto -->
+<section class="gallery-section">
+  <div class="gallery-header">
+    <h2 class="section-title">Nuestros Trabajos</h2>
+  </div>
+
+  <!-- FIX 4: Slideshow de una foto por vez con flechas, dots y swipe -->
+  <div class="gallery-slideshow" id="gallerySlideshow" role="region" aria-label="Galería de trabajos">
+
+    <div class="slides-wrapper">
+      <div class="slide active" role="group" aria-label="Trabajo 1 de 5">
+        <img src="https://i.ibb.co/xS8sRxNr/FB-IMG-1776101255726.jpg" alt="Trabajo de barbería 1" loading="eager">
+      </div>
+      <div class="slide" role="group" aria-label="Trabajo 2 de 5">
+        <img src="https://i.ibb.co/S47Ds1jK/FB-IMG-1776101232376.jpg" alt="Trabajo de barbería 2" loading="lazy">
+      </div>
+      <div class="slide" role="group" aria-label="Trabajo 3 de 5">
+        <img src="https://i.ibb.co/whJTQNnH/FB-IMG-1776101260994.jpg" alt="Trabajo de barbería 3" loading="lazy">
+      </div>
+      <div class="slide" role="group" aria-label="Trabajo 4 de 5">
+        <img src="https://i.ibb.co/hFQnjYCk/FB-IMG-1776101281356.jpg" alt="Trabajo de barbería 4" loading="lazy">
+      </div>
+      <div class="slide" role="group" aria-label="Trabajo 5 de 5">
+        <img src="https://i.ibb.co/d0MwsMkS/FB-IMG-1776101272177.jpg" alt="Trabajo de barbería 5" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Flecha anterior -->
+    <button class="slide-arrow slide-prev" id="slidePrev" aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <!-- Flecha siguiente -->
+    <button class="slide-arrow slide-next" id="slideNext" aria-label="Foto siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <!-- Puntos indicadores -->
+    <div class="slide-dots" role="tablist" aria-label="Seleccionar foto">
+      <button class="dot active" role="tab" aria-label="Foto 1" aria-selected="true"></button>
+      <button class="dot"        role="tab" aria-label="Foto 2" aria-selected="false"></button>
+      <button class="dot"        role="tab" aria-label="Foto 3" aria-selected="false"></button>
+      <button class="dot"        role="tab" aria-label="Foto 4" aria-selected="false"></button>
+      <button class="dot"        role="tab" aria-label="Foto 5" aria-selected="false"></button>
+    </div>
+
+    <!-- Contador -->
+    <div class="slide-counter" id="slideCounter" aria-live="polite">1 / 5</div>
+
+  </div>
+</section>
+
+<!-- CTA AGENDAR — debajo de la galería -->
+<div class="cta-agendar">
+  <p class="cta-agendar-label">¿Listo para tu próximo corte?</p>
+  <a
+    class="btn-agendar"
+    href="https://wa.me/595983521982?text=Hola!%20Quisiera%20agendar%20un%20turno%20en%20Barber%27s%20House."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Agendar cita por WhatsApp"
+  >
+    <i class="fa-solid fa-calendar-check"></i>
+    AGENDAR CITA
+  </a>
+</div>
+
+<div class="ornament" aria-hidden="true">— ✦ —</div>
+
+<!-- MAP — CÓMO LLEGAR -->
+<section class="map-section" aria-label="Ubicación en mapa">
+  <iframe
+    class="map-iframe"
+    title="Ubicación Barber's Hoüse"
+    src="https://maps.google.com/maps?q=Av.+San+Jose+y+Mcal.+Estigarribia,+Limpio,+Paraguay&output=embed&z=16"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+  <div class="map-overlay-btn">
+    <a
+      class="btn-map"
+      href="https://maps.google.com/?q=Av.+San+Jose+y+Mcal.+Estigarribia+-+Limpio"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Cómo llegar a Barber's Hoüse"
+    >
+      <i class="fa-solid fa-map-location-dot"></i>
+      Cómo Llegar
+    </a>
+  </div>
+</section>
+
+<div class="ornament" aria-hidden="true">— ✦ —</div>
+
+<!-- SOCIAL -->
+<section class="social-section">
+  <h2 class="section-title">Seguinos</h2>
+  <p class="social-subtitle">Encontranos en redes sociales</p>
+  <div class="social-links">
+    <!-- FIX 1: fa-brands fa-instagram ahora carga correctamente -->
+    <a class="social-link social-link-ig" href="https://www.instagram.com/barbershouse_py" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Barber's House">
+      <i class="fa-brands fa-instagram"></i>
+      <div class="social-link-handle">
+        <span>Instagram</span>
+        <span>@barbershouse_py</span>
+      </div>
+    </a>
+    <!-- FIX 1: fa-brands fa-facebook ahora carga correctamente -->
+    <a class="social-link social-link-fb" href="https://www.facebook.com/share/18Xxb45EZu/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Barber's House">
+      <i class="fa-brands fa-facebook"></i>
+      <div class="social-link-handle">
+        <span>Facebook</span>
+        <span>Barber'shouse</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-address">
+    <i class="fa-solid fa-location-dot"></i>
+    Av. San José &amp; Mcal. Estigarribia — Limpio, Paraguay.<br>
+    <i class="fa-solid fa-clock"></i>
+    Lunes a Sábado · 10:00 a 20:00 hs.
+  </p>
+  <p class="footer-copy">
+    © 2026 Barber's Hoüse · Todos los derechos reservados<br>
+    <i class="fa-solid fa-phone"></i> +595 983 521 982
+  </p>
+  <p class="footer-designer">Diseño por CS Digital</p>
+</footer>
+
+<!-- FLOATING WA -->
+<!-- FIX 1: fa-brands fa-whatsapp ahora carga correctamente -->
+<a
+  class="wa-float"
+  href="https://wa.me/595983521982?text=Hola!%20Quisiera%20agendar%20un%20turno%20en%20Barber%27s%20House."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contactar por WhatsApp"
+>
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- ============================================================
+     FIX 4: SLIDESHOW JAVASCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  const slideshow   = document.getElementById('gallerySlideshow');
+  const slides      = slideshow.querySelectorAll('.slide');
+  const dots        = slideshow.querySelectorAll('.dot');
+  const counter     = document.getElementById('slideCounter');
+  const total       = slides.length;
+  let   current     = 0;
+  let   autoTimer   = null;
+  let   touchStartX = 0;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    dots[current].setAttribute('aria-selected', 'false');
+
+    current = ((n % total) + total) % total;
+
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    dots[current].setAttribute('aria-selected', 'true');
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(next, 4500);
+  }
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  // Arrows
+  document.getElementById('slideNext').addEventListener('click', function () {
+    next(); stopAuto(); startAuto();
+  });
+  document.getElementById('slidePrev').addEventListener('click', function () {
+    prev(); stopAuto(); startAuto();
+  });
+
+  // Dots
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      goTo(i); stopAuto(); startAuto();
+    });
+  });
+
+  // Touch / swipe
+  slideshow.addEventListener('touchstart', function (e) {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  slideshow.addEventListener('touchend', function (e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 44) {
+      diff > 0 ? next() : prev();
+      stopAuto(); startAuto();
+    }
+  }, { passive: true });
+
+  // Keyboard
+  slideshow.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { next(); stopAuto(); startAuto(); }
+    if (e.key === 'ArrowLeft')  { prev(); stopAuto(); startAuto(); }
+  });
+
+  // Pause on hover
+  slideshow.addEventListener('mouseenter', stopAuto);
+  slideshow.addEventListener('mouseleave', startAuto);
+
+  // Kick off
+  startAuto();
+})();
+</script>
+
+</body>
+</html>
